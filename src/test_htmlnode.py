@@ -1,5 +1,5 @@
 from unittest import TestCase
-from htmlnode import HTMLNode, LeafNode
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 class TestHTMLNode(TestCase):
     #When tag, value, children and props are the same the HTMLNode objects are equal
@@ -46,3 +46,37 @@ class TestHTMLNode(TestCase):
     def test_leaf_to_html_a(self):
         node = LeafNode("a", "Click here", props={"href": "https://www.google.com"})
         self.assertEqual(node.to_html(), '<a href="https://www.google.com">Click here</a>')
+ 
+
+    #testing parent node
+    def test_to_html_with_children(self):
+        child_node = LeafNode("span", "child")
+        parent_node = ParentNode("div", [child_node])
+        self.assertEqual(parent_node.to_html(), "<div><span>child</span></div>")
+
+    def test_to_html_with_grandchildren(self):
+        grandchild_node = LeafNode("b", "grandchild")
+        child_node = ParentNode("span", [grandchild_node])
+        parent_node = ParentNode("div", [child_node])
+        self.assertEqual(
+            parent_node.to_html(),
+            "<div><span><b>grandchild</b></span></div>",
+        )
+
+    def test_to_html_with_no_children(self):
+        parent_node = ParentNode("div", [])
+        with self.assertRaises(ValueError):
+            parent_node.to_html()
+
+    
+    def test_to_html_with_no_tag(self):
+        parent_node = ParentNode(None, [LeafNode("p", "Hello, world!")])
+        with self.assertRaises(ValueError):
+            parent_node.to_html()
+
+    def test_to_html_with_no_value(self):
+        leaf_node = LeafNode("p", None)
+        with self.assertRaises(ValueError):
+            leaf_node.to_html()
+
+    
