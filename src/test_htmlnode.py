@@ -1,5 +1,6 @@
 from unittest import TestCase
-from htmlnode import HTMLNode, LeafNode, ParentNode
+from htmlnode import HTMLNode, LeafNode, ParentNode, text_node_to_html_node
+from textnode import TextNode, TextType
 
 class TestHTMLNode(TestCase):
     #When tag, value, children and props are the same the HTMLNode objects are equal
@@ -80,3 +81,28 @@ class TestHTMLNode(TestCase):
             leaf_node.to_html()
 
     
+    def test_text(self):
+        node = TextNode("This is a text node", TextType.NORMAL)
+        html_node = text_node_to_html_node(node)
+        self.assertEqual(html_node.tag, None)
+        self.assertEqual(html_node.value, "This is a text node")
+
+    
+    def test_bold_text(self):
+        node = TextNode("Bold text", TextType.BOLD)
+        html_node = text_node_to_html_node(node)
+        self.assertEqual(html_node.tag, "b")
+        self.assertEqual(html_node.value, "Bold text")
+
+
+    def test_link_missing_url(self):
+        node = TextNode("Click here", TextType.LINK)  # No URL provided
+        with self.assertRaises(ValueError):
+            text_node_to_html_node(node)
+
+    #Test for image
+    def test_image_text_node(self):
+        node = TextNode("An image", TextType.IMAGE, url="https://example.com/image.jpg")
+        html_node = text_node_to_html_node(node)
+        self.assertEqual(html_node.tag, "img")
+        self.assertEqual(html_node.props, {"src": "https://example.com/image.jpg", "alt": "An image"})
