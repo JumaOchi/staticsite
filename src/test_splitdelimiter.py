@@ -6,46 +6,46 @@ class TestSplitDelimiter(unittest.TestCase):
     
     def test_split_normal_text(self):
         """Test splitting normal text with backticks for code blocks."""
-        node = TextNode("This is text with a `code block` word", TextType.NORMAL)
+        node = TextNode("This is text with a `code block` word", TextType.TEXT)
         new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
 
         expected_nodes = [
-            TextNode("This is text with a ", TextType.NORMAL),
+            TextNode("This is text with a ", TextType.TEXT),
             TextNode("code block", TextType.CODE),
-            TextNode(" word", TextType.NORMAL),
+            TextNode(" word", TextType.TEXT),
         ]
 
         self.assertEqual(new_nodes, expected_nodes)
 
     def test_split_bold_text(self):
         """Test splitting bold text with double asterisks for bold formatting."""
-        node = TextNode("This is **bold text** inside", TextType.NORMAL)
+        node = TextNode("This is **bold text** inside", TextType.TEXT)
         new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
 
         expected_nodes = [
-            TextNode("This is ", TextType.NORMAL),
+            TextNode("This is ", TextType.TEXT),
             TextNode("bold text", TextType.BOLD),
-            TextNode(" inside", TextType.NORMAL),
+            TextNode(" inside", TextType.TEXT),
         ]
 
         self.assertEqual(new_nodes, expected_nodes)
 
     def test_split_italic_text(self):
         """Test splitting italic text with underscores."""
-        node = TextNode("Some _italicized_ words", TextType.NORMAL)
+        node = TextNode("Some _italicized_ words", TextType.TEXT)
         new_nodes = split_nodes_delimiter([node], "_", TextType.ITALIC)
 
         expected_nodes = [
-            TextNode("Some ", TextType.NORMAL),
+            TextNode("Some ", TextType.TEXT),
             TextNode("italicized", TextType.ITALIC),
-            TextNode(" words", TextType.NORMAL),
+            TextNode(" words", TextType.TEXT),
         ]
 
         self.assertEqual(new_nodes, expected_nodes)
 
     def test_no_matching_delimiter_raises_error(self):
         """Test when there is an opening delimiter but no closing delimiter."""
-        node = TextNode("This is `unmatched code block", TextType.NORMAL)
+        node = TextNode("This is `unmatched code block", TextType.TEXT)
         
         with self.assertRaises(ValueError) as context:
             split_nodes_delimiter([node], "`", TextType.CODE)

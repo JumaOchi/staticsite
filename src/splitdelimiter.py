@@ -4,7 +4,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
     
     for node in old_nodes:
-        if node.text_type not in {TextType.NORMAL, TextType.BOLD, TextType.ITALIC}:
+        if node.text_type not in {TextType.TEXT, TextType.BOLD, TextType.ITALIC}:
             new_nodes.append(node)  # Keep non-text nodes unchanged
             continue
         
