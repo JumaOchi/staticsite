@@ -1,8 +1,8 @@
-from unittest import TestCase
+import unittest
 from htmlnode import HTMLNode, LeafNode, ParentNode, text_node_to_html_node
 from textnode import TextNode, TextType
 
-class TestHTMLNode(TestCase):
+class TestHTMLNode(unittest.TestCase):
     #When tag, value, children and props are the same the HTMLNode objects are equal
     def test_eq(self):
         node = HTMLNode("p", "This is a paragraph")
@@ -81,6 +81,7 @@ class TestHTMLNode(TestCase):
             leaf_node.to_html()
 
     
+    #Testing text node to html node
     def test_text(self):
         node = TextNode("This is a text node", TextType.TEXT)
         html_node = text_node_to_html_node(node)
@@ -91,7 +92,7 @@ class TestHTMLNode(TestCase):
     def test_bold_text(self):
         node = TextNode("Bold text", TextType.BOLD)
         html_node = text_node_to_html_node(node)
-        self.assertEqual(html_node.tag, "b")
+        self.assertEqual(html_node.tag, "strong")
         self.assertEqual(html_node.value, "Bold text")
 
 
@@ -106,3 +107,13 @@ class TestHTMLNode(TestCase):
         html_node = text_node_to_html_node(node)
         self.assertEqual(html_node.tag, "img")
         self.assertEqual(html_node.props, {"src": "https://example.com/image.jpg", "alt": "An image"})
+
+
+    def test_italic_text(self): 
+        node = TextNode("Italic text", TextType.ITALIC)
+        html_node = text_node_to_html_node(node)
+        self.assertEqual(html_node.tag, "em")
+        self.assertEqual(html_node.value, "Italic text")
+        
+if __name__ == "__main__":
+    unittest.main()
