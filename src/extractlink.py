@@ -2,12 +2,12 @@ from textnode import TextNode, TextType
 import re
 
 def extract_markdown_images(text):
-    """Extracts markdown-style image references from text."""
-    return re.findall(r"!\[(.+?)\]\((https?:\/\/[^\s)]+)\)", text)
+    """Extracts markdown-style image references, supporting both absolute and relative URLs."""
+    return re.findall(r"!\[(.+?)\]\(([^)]+)\)", text)
 
 def extract_markdown_links(text):
-    """Extracts markdown-style links from text."""
-    return re.findall(r"(?<!!)\[(.+?)\]\((https?:\/\/[^\s)]+)\)", text)
+    """Extracts markdown-style links from text, supporting both absolute and relative URLs."""
+    return re.findall(r"(?<!!)\[(.+?)\]\(([^)\s]+)\)", text)
 
 
 def split_nodes_image(old_nodes):
@@ -31,8 +31,11 @@ def split_nodes_image(old_nodes):
             
             if split_text[0]:  # Add text before the image
                 new_nodes.append(TextNode(split_text[0], TextType.TEXT))
-            
-            new_nodes.append(TextNode(alt_text, TextType.IMAGE, img_url))
+
+            print(f"Creating image node: alt={alt_text}, url={img_url}")
+            new_nodes.append(TextNode(alt_text, TextType.IMAGE, img_url))  # Store img URL in `url`
+
+
             
             text = split_text[1] if len(split_text) > 1 else ""
         

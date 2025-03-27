@@ -16,6 +16,7 @@ class BlockType(Enum):
     QUOTE = "quote"
     UNORDERED_LIST = "unordered_list"
     ORDERED_LIST = "ordered_list"
+    IMAGE = "image"
 
 
 def block_to_block_type(block):
@@ -26,6 +27,8 @@ def block_to_block_type(block):
     if block.startswith("```") and block.endswith("```"):
         return BlockType.CODE
     lines = block.split("\n")
+    if all(re.match(r"^!\[.*\]\(.*\)", line) for line in lines):
+        return BlockType.IMAGE
     if all(re.match(r"^> ", line) for line in lines):
         return BlockType.QUOTE
     # Every line in unordered list starts with '- ', '* ', or '+ '

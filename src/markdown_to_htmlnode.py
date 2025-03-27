@@ -20,7 +20,10 @@ def markdown_to_html_node(markdown):
         elif block_type == BlockType.HEADING:
             heading_level = len(re.match(r"^(#{1,6}) ", block).group(1))  # Count # symbols
             children.append(ParentNode(getattr(HtmlType, f"H{heading_level}"), text_to_children(block.lstrip("# "))))
-
+        
+        elif block_type == BlockType.IMAGE:
+            children.append(text_node_to_html_node(text_to_textnodes(block)[0]))  # Only one image node
+            
         elif block_type == BlockType.CODE:
             code_lines = block.split("\n")[1:-1]  # Remove the first and last triple backticks
             cleaned_code = "\n".join(line.lstrip() for line in code_lines).rstrip() + "\n"  # Remove leading spaces

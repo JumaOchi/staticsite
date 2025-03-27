@@ -53,18 +53,25 @@ class HTMLNode:
         return f"HTMLNode({self.tag}, {self.value}, {self.children}, {self.props})"
 
 class LeafNode(HTMLNode):
-    def __init__(self, tag, value, props =None):
+    def __init__(self, tag, value, props=None):
         super().__init__(tag, value, props=props)
 
     def to_html(self):
+        if self.tag == "img":
+            if self.props is None or "src" not in self.props:
+                raise ValueError("Image nodes must have a 'src' attribute")
+            return f'<img{self.props_to_html()} />'  # Self-closing tag
+
         if self.value is None:
             raise ValueError("Leaf nodes must have a value")
+
         if self.tag is None:
-            return self.value  # Just return the text if there's no HTML tag
-        
-        tag_str = self.tag.value if isinstance(self.tag, HtmlType) else str(self.tag)  # Ensure string tag
-        #print(f"Tag: {self.tag}, Type: {type(self.tag)}")  # Debugging statement
+            return self.value  # Just return the text if no HTML tag
+
+        tag_str = self.tag.value if isinstance(self.tag, HtmlType) else str(self.tag)
         return f"<{tag_str}{self.props_to_html()}>{self.value}</{tag_str}>"
+
+
 
         
 
@@ -111,7 +118,8 @@ def text_node_to_html_node(text_node):
     elif text_node.text_type == TextType.IMAGE:
         if not text_node.url:
             raise ValueError("TextNode of type IMAGE must have a URL")
-        return LeafNode("img", None, {"src": text_node.url, "alt": text_node.text})
+        return LeafNode("img", None, props={"src": text_node.url, "alt": text_node.text})
+
 
     raise ValueError(f"Unsupported text type: {text_node.text_type}")
 

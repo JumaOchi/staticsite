@@ -21,5 +21,7 @@ def text_to_textnodes(text) :
     # Step 4: Process links
     nodes = split_nodes_link(nodes)
 
+       # Debugging
+    #print("Processed nodes:", nodes)  # See if images were properly detected
     return nodes
 
