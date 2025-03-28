@@ -59,7 +59,8 @@ def generate_page(from_path, template_path, dest_path, basepath="/"):
     if basepath == "/":
         html.replace('href="/', 'href="').replace('src="/', 'src="')
     else:
-        html = html.replace('href="/', f'href="{basepath}/').replace('src="/', f'src="{basepath}/')
+        html = html.replace('href="/', f'href="{basepath.rstrip('/')}/').replace('src="/', f'src="{basepath.rstrip('/')}/')
+
 
 
     # Convert `.md` to `.html`
