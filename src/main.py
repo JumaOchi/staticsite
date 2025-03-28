@@ -56,7 +56,11 @@ def generate_page(from_path, template_path, dest_path, basepath="/"):
 
     html = template.replace("{{title}}", title).replace("{{content}}", html_node.to_html())
     # Replace href and src to include basepath
-    html = html.replace('href="/', f'href="{basepath}/').replace('src="/', f'src="{basepath}/')
+    if basepath == "/":
+        html.replace('href="/', 'href="').replace('src="/', 'src="')
+    else:
+        html = html.replace('href="/', f'href="{basepath}/').replace('src="/', f'src="{basepath}/')
+
 
     # Convert `.md` to `.html`
     if dest_path.endswith(".md"):
