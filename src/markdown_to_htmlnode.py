@@ -31,7 +31,7 @@ def markdown_to_html_node(markdown):
             children.append(text_node_to_html_node(code_node))
 
         elif block_type == BlockType.QUOTE:
-            children.append(ParentNode(HtmlType.BLOCKQUOTE, text_to_children(block.lstrip("> "))))
+            children.append(ParentNode(HtmlType.QUOTE, text_to_children(block.lstrip("> "))))
 
         elif block_type == BlockType.UNORDERED_LIST:
             list_items = [re.sub(r"^\s*[-*+] ", "", item).strip() for item in block.split("\n") if item]
