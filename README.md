@@ -83,7 +83,7 @@ If you like the project, feel free to star  the repo and contribute!
 ##  Contact
 Got questions or suggestions? Reach out:
 - GitHub: [jumaochi](https://github.com/jumaochi)
-- Website: [jumaochi.github.io](https://jumaochi.github.io/juma.github.io/)
+- Website: [jumaochi.github.io](https://jumaochi.github.io/juma)
 
 ---
 
