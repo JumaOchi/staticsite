@@ -15,7 +15,7 @@ This project is a lightweight, markdown-based static site generator built in Pyt
 - Supports hierarchical content structures.
 - Includes automatic link generation and base path handling.
 - Customizable templates for styling and layout.
-- Compatible with GitHub Pages for easy deployment.
+
 
 ---
 
