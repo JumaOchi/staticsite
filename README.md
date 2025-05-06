@@ -33,8 +33,8 @@ cd staticsite
 ###  Local Development
 To test the site locally before deploying:
 ```bash
-chmod +x build.sh  # Make the script executable
-./build.sh  # Build and serve the site
+chmod +x main.sh  # Make the script executable
+./main.sh  # Build and serve the site
 ```
 Then, open your browser and go to:
 ```
@@ -44,7 +44,7 @@ http://localhost:8888
 ###  Deploying to GitHub Pages
 1. Push your changes to the `main` branch.
 2. Ensure GitHub Pages is enabled in your repo settings.
-3. The site will be available at:
+3. The site will be available at something like below, varys. Mine was:
    ```
    https://jumaochi.github.io/staticsite/
    ```
